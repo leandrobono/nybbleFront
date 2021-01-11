@@ -73,6 +73,7 @@ export class LoginComponent {
     this.http.post(environment.url + "/login", body).subscribe(
       (success: any) => {
         localStorage.setItem('token', success.token);
+        localStorage.setItem('rol', success.rol);
         this.route.navigate(["home"]);
       },
       error => {

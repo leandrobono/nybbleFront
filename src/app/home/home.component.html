@@ -4,10 +4,13 @@
             <p (click)="irLogout()">Logout</p>
         </div>
         <div>
-            <p (click)="irEvents()">Ver eventos</p>
+            <p (click)="irEvents()" [style.background-color]="section == 'events' ? 'red' : 'transparent'">Eventos</p>
         </div>
         <div>
-            <p (click)="irMyEvents()">Ver mis eventos</p>
+            <p (click)="irMyEvents()" [style.background-color]="section == 'myevents' ? 'red' : 'transparent'">Mis Próximos Eventos</p>
+        </div>
+        <div *ngIf="rol == 0">
+            <p (click)="irReservas()" [style.background-color]="section == 'reservas' ? 'red' : 'transparent'">Reservas</p>
         </div>
         --------
         <div *ngIf="section == 'events'">
@@ -37,7 +40,48 @@
                     <p>Costo: {{reserva.evento.costo}}</p>
                     <p>Fecha: {{reserva.evento.fecha | date:'dd/MM/yyyy'}}</p>
                     <p>Proveedor: {{reserva.evento.proveedor.nombre}}</p>
+                    <input type="checkbox" (change)="setCancelEventos(reserva.id)">
                     <p>---------------------------------------</p>
+                </div>
+            </div>
+            <p>{{errorCancel}}</p>
+            <button (click)="makeCancelReserva()">Cancelar Reserva</button>
+        </div>
+        <div *ngIf="section == 'reservas' && rol == 0">
+            <div>
+                <div>
+                    <select [(ngModel)]="proveedor">
+                        <option value="0">Seleccionar</option>
+                        <option
+                                *ngFor="let pro of proveedores; let i = index"
+                                [value]="pro.id"
+                              >
+                                {{ pro.nombre }}
+                              </option>
+                    </select>
+                    <div style="display: flex;">
+                        <p>Fecha Desde:</p>
+                        <input type="date" [(ngModel)]="desde">
+                    </div>
+                    <div style="display: flex;">
+                        <p>Fecha Hasta:</p>
+                        <input type="date" [(ngModel)]="hasta">
+                    </div>
+                    <div>
+                        <button (click)="getAllReservas()">Buscar</button>
+                    </div>
+                </div>
+                <div *ngFor="let reserva of reservasTotales; let i = index;">
+                    <p>Ciudad: {{reserva.evento.ciudad}}</p>
+                    <p>Pais: {{reserva.evento.pais}}</p>
+                    <p>Costo: {{reserva.evento.costo}}</p>
+                    <p>Fecha: {{reserva.evento.fecha | date:'dd/MM/yyyy'}}</p>
+                    <p>Proveedor: {{reserva.evento.proveedor.nombre}}</p>
+                    <p>Turista: {{reserva.usuario.nombre}} {{reserva.usuario.apellido}}</p>
+                    <p>---------------------------------------</p>
+                </div>
+                <div>
+                    <p>Costo total: {{costoTotalReservas}}</p>
                 </div>
             </div>
         </div>
