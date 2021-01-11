@@ -1,0 +1,45 @@
+<html>
+    <body>
+        <div>
+            <p (click)="irLogout()">Logout</p>
+        </div>
+        <div>
+            <p (click)="irEvents()">Ver eventos</p>
+        </div>
+        <div>
+            <p (click)="irMyEvents()">Ver mis eventos</p>
+        </div>
+        --------
+        <div *ngIf="section == 'events'">
+            <div>
+                <div *ngFor="let evento of eventos; let i = index;">
+                    <p>Ciudad: {{evento.ciudad}}</p>
+                    <p>Pais: {{evento.pais}}</p>
+                    <p>Temperatura: {{evento.temperature}}</p>
+                    <p>Costo: {{evento.costo}}</p>
+                    <p>Fecha: {{evento.fecha | date:'dd/MM/yyyy'}}</p>
+                    <p>Capacidad Actual: {{evento.limite}}</p>
+                    <p>Proveedor: {{evento.proveedor.nombre}}</p>
+                    <input type="checkbox" (change)="setEventos(evento.id)">
+                    <p>---------------------------------------</p>
+                </div>
+            </div>
+
+            <p>{{error}}</p>
+            <button (click)="makeReserva()">Reservar</button>
+        </div>
+        <div *ngIf="section == 'myevents'">
+            <div>
+                <div *ngFor="let reserva of reservas; let i = index;">
+                    <p>Ciudad: {{reserva.evento.ciudad}}</p>
+                    <p>Pais: {{reserva.evento.pais}}</p>
+                    <p>Temperatura: {{reserva.evento.temperature}}</p>
+                    <p>Costo: {{reserva.evento.costo}}</p>
+                    <p>Fecha: {{reserva.evento.fecha | date:'dd/MM/yyyy'}}</p>
+                    <p>Proveedor: {{reserva.evento.proveedor.nombre}}</p>
+                    <p>---------------------------------------</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

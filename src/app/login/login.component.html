@@ -1,0 +1,44 @@
+<html>
+    <body>
+        <div *ngIf="form == 'register'">
+            <div>
+                <p (click)="irLogin()">Ir al login</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Nombre" [(ngModel)]="nombre">
+            </div>
+            <div>
+                <input type="text" placeholder="Apellido" [(ngModel)]="apellido">
+            </div>
+            <div>
+                <input type="text" placeholder="Email" [(ngModel)]="email">
+            </div>
+            <div>
+                <input type="password" placeholder="Password" [(ngModel)]="password">
+            </div>
+            <div>
+                <p>{{error}}</p>
+            </div>
+            <div>
+                <button (click)="register()">Enviar</button>
+            </div>
+        </div>
+        <div *ngIf="form == 'login'">
+            <div>
+                <p (click)="irRegister()">Ir al registro</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Email" [(ngModel)]="email">
+            </div>
+            <div>
+                <input type="password" placeholder="Password" [(ngModel)]="password">
+            </div>
+            <div>
+                <p>{{error}}</p>
+            </div>
+            <div>
+                <button (click)="login()">Enviar</button>
+            </div>
+        </div>
+    </body>
+</html>
