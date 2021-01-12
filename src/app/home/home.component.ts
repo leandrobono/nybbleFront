@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -66,6 +67,33 @@ export class HomeComponent {
         this.getAllReservas();
       }
     }
+  }
+
+  downloadFile(data: any) {
+    let reservas = [];
+    for (var i = 0; i < data.length; i++) {
+      reservas.push(
+        {
+          id: data[i].id,
+          ciudad: data[i].evento.ciudad,
+          pais: data[i].evento.pais,
+          costo: data[i].evento.costo,
+          fecha: data[i].evento.fecha,
+          proveedor: data[i].evento.proveedor.nombre,
+          turista: data[i].usuario.nombre + " " + data[i].usuario.apellido
+        }
+      );
+    }
+    data = reservas;
+
+    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+    const header = Object.keys(data[0]);
+    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+    csv.unshift(header.join(','));
+    let csvArray = csv.join('\r\n');
+
+    var blob = new Blob([csvArray], {type: 'text/csv' })
+    saveAs(blob, "reservas.csv");
   }
 
   getAllReservas() {

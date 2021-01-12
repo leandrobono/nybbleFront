@@ -70,6 +70,9 @@
                     <div>
                         <button (click)="getAllReservas()">Buscar</button>
                     </div>
+                    <div>
+                        <button (click)="downloadFile(reservasTotales)">Descargar</button>
+                    </div>
                 </div>
                 <div *ngFor="let reserva of reservasTotales; let i = index;">
                     <p>Ciudad: {{reserva.evento.ciudad}}</p>
